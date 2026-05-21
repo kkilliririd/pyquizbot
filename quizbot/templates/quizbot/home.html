@@ -1,0 +1,44 @@
+{% extends 'quizbot/base.html' %}
+{% block content %}
+
+<div class="card p-4 mb-3">
+  <h4 class="fw-bold mb-1" style="color:#a78bfa;">python білімдерін тексеру / тестирование знаний python</h4>
+  <p class="text-secondary mb-4" style="font-size:0.9rem;">{{ total }} сұрақ · 4 тақырып / вопрос · 4 темы</p>
+
+  <form method="post" action="{% url 'start' %}">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label class="form-label text-secondary" style="font-size:0.85rem;">атың / твоё имя</label>
+      <input type="text" name="name" class="form-control"
+             style="background:#12122a; border:1.5px solid #2d2d4e; color:#e8e8f0; border-radius:10px;"
+             placeholder="мысалы / например: zhanerke"
+             maxlength="50">
+    </div>
+
+    <div class="d-grid gap-2 mb-4">
+      <button type="submit" name="mode" value="quick" class="btn btn-main py-3 fs-5">
+        ⚡ жылдам · быстро — 10 сұрақ / вопросов
+      </button>
+      <button type="submit" name="mode" value="all" class="btn btn-opt py-2">
+        📋 барлығы · все — {{ total }} сұрақ / вопросов
+      </button>
+    </div>
+
+    <p class="text-secondary mb-2" style="font-size:0.85rem;">немесе тақырыпты таңда / или выбери тему:</p>
+    <div class="row g-2">
+      {% for topic, count in topics.items %}
+      <div class="col-6">
+        <button type="submit" name="mode" value="{{ topic }}"
+                class="btn btn-opt w-100 py-2 px-3">
+          <div style="font-size:0.85rem; font-weight:600; color:#a78bfa;">{{ topic }}</div>
+          <div style="font-size:0.75rem; color:#606080;">{{ count }} сұрақ / вопросов</div>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

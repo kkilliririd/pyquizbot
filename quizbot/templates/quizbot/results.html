@@ -1,0 +1,51 @@
+{% extends 'quizbot/base.html' %}
+{% block content %}
+
+<div class="card p-4 text-center mb-3">
+
+  <div class="score-circle mb-3
+    {% if grade == '5' %}" style="background:#0d2b1e; color:#4ade80;">
+  {% elif grade == '4' %}" style="background:#0d1b2b; color:#60a5fa;">
+  {% elif grade == '3' %}" style="background:#2b2200; color:#fbbf24;">
+  {% else %}" style="background:#2b0d0d; color:#f87171;">
+  {% endif %}
+    {{ pct }}%
+  </div>
+
+  <h4 class="fw-bold mb-1" style="color:#a78bfa;">{{ name }}</h4>
+  <p class="text-secondary mb-1">{{ score }} / {{ total }} дұрыс / правильных</p>
+
+  <div class="fs-5 fw-bold mt-2
+    {% if grade == '5' %}tag-5{% elif grade == '4' %}tag-4{% elif grade == '3' %}tag-3{% else %}tag-2{% endif %}">
+    баға / оценка: {{ grade }}
+    {% if grade == '5' %} — өте жақсы / отлично 🏆
+    {% elif grade == '4' %} — жақсы / хорошо 👍
+    {% elif grade == '3' %} — қанағаттанарлық / удовлетворительно 😐
+    {% else %} — қайта оқу керек / нужно повторить 📚
+    {% endif %}
+  </div>
+</div>
+
+{% if topic_errors %}
+<div class="card p-4 mb-3">
+  <h6 class="fw-bold mb-3" style="color:#f87171;">⚠️ қателер / ошибки:</h6>
+  {% for topic, items in topic_errors.items %}
+  <div class="mb-3">
+    <div class="badge-topic mb-2 d-inline-block">{{ topic }}</div>
+    {% for item in items %}
+    <div class="mb-2 p-2" style="background:#12122a; border-radius:8px; border-left:3px solid #6b1a1a;">
+      <div style="font-size:0.85rem; color:#c0c0e0;">{{ item.q }}</div>
+      <div style="font-size:0.8rem; color:#4ade80; margin-top:4px;">✓ {{ item.correct }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="d-grid gap-2">
+  <a href="{% url 'home' %}" class="btn btn-main py-2">🔄 қайтадан / снова</a>
+  <a href="{% url 'history' %}" class="btn btn-opt py-2">📊 тарих / история нәтижелер / результатов</a>
+</div>
+
+{% endblock %}
