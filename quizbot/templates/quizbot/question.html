@@ -2,19 +2,19 @@
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-2">
-  <span style="color:#7060a0; font-size:0.85rem;">{{ name }}</span>
-  <span style="color:#7060a0; font-size:0.85rem;">✅ {{ score }} / {{ current|add:"-1" }}</span>
+  <span style="color:#514ED9; font-size:0.85rem;">{{ name }}</span>
+  <span style="color:#514ED9; font-size:0.85rem;">{{ score }} / {{ current|add:"-1" }}</span>
 </div>
 
 <div class="progress mb-3">
-  <div class="progress-bar" style="width:{{ progress }}%"></div>
+  <div class="progress-bar" style="width:{{progress}}%"></div>
 </div>
 
 {% if feedback %}
   {% if feedback.ok %}
-  <div class="alert-ok p-3 mb-3">✅ дұрыс! / правильно! +1 балл</div>
+  <div class="alert-ok p-3 mb-3">дұрыс! / правильно! +1 балл</div>
   {% else %}
-  <div class="alert-err p-3 mb-3">❌ қате / неверно. дұрыс жауап / правильный ответ: <strong>{{ feedback.correct_text }}</strong></div>
+  <div class="alert-err p-3 mb-3">қате / неверно. дұрыс жауап / правильный ответ: <strong>{{ feedback.correct_text }}</strong></div>
   {% endif %}
 {% endif %}
 
@@ -22,13 +22,13 @@
 
   <div class="d-flex justify-content-between align-items-start mb-3">
     <span class="badge-topic">{{ q.topic }}</span>
-    <span style="color:#504070; font-size:0.85rem;">{{ current }} / {{ total }}</span>
+    <span style="color:#3F8FD2; font-size:0.85rem;">{{ current }} / {{ total }}</span>
   </div>
 
   <p class="fw-semibold mb-4" style="font-size:1.05rem; color:#d0d0f0; line-height:1.6;">{{ q.q }}</p>
 
   {% if show_hint %}
-  <div class="alert-hint p-3 mb-3">💡 {{ q.hint }}</div>
+  <div class="alert-hint p-3 mb-3">{{ q.hint }}</div>
   {% endif %}
 
   <form method="post">
@@ -37,7 +37,7 @@
     <div class="d-grid gap-2 mb-3">
       {% for idx, opt in opts %}
       <button type="submit" name="answer" value="{{ idx }}" class="btn btn-opt py-2 px-3">
-        <span style="color:#7c6af5; font-weight:700; margin-right:8px;">
+        <span style="color:#514ED9; font-weight:700; margin-right:8px;">
           {% if idx == 0 %}a){% elif idx == 1 %}b){% elif idx == 2 %}c){% else %}d){% endif %}
         </span>
         {{ opt }}
@@ -51,7 +51,7 @@
     {% csrf_token %}
     <input type="hidden" name="action" value="hint">
     <button type="submit" class="btn btn-opt btn-sm px-3 py-1" style="font-size:0.8rem;">
-      💡 кеңес / подсказка
+      кеңес / подсказка
     </button>
   </form>
   {% endif %}

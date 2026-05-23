@@ -2,13 +2,13 @@
 {% block content %}
 
 <div class="card p-4">
-  <h5 class="fw-bold mb-4" style="color:#a78bfa;">📊 нәтижелер тарихы / история результатов</h5>
+  <h5 class="fw-bold mb-4" style="color:#3F8FD2;">нәтижелер тарихы / история результатов</h5>
 
   {% if results %}
   <div class="table-responsive">
     <table class="table table-hover align-middle">
       <thead>
-        <tr style="color:#606080; font-size:0.8rem;">
+        <tr style="color:#3F8FD2; font-size:0.8rem;">
           <th>аты / имя</th>
           <th>тақырып / тема</th>
           <th>нәтиже / результат</th>
@@ -21,19 +21,19 @@
         <tr>
           <td style="color:#c0c0e0;">{{ r.name }}</td>
           <td><span class="badge-topic">{{ r.topic }}</span></td>
-          <td style="color:#a0a0c0;">{{ r.score }}/{{ r.total }} ({{ r.percent }}%)</td>
+          <td style="color:#a0bbc0;">{{ r.score }}/{{ r.total }} ({{ r.percent }}%)</td>
           <td class="fw-bold tag-{{ r.grade }}">{{ r.grade }}</td>
-          <td style="color:#505070; font-size:0.8rem;">{{ r.created_at|date:"d.m H:i" }}</td>
+          <td style="color:#465770; font-size:0.8rem;">{{ r.created_at|date:"d.m H:i" }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   {% else %}
-  <p class="text-secondary text-center py-4">нәтиже жоқ / нет результатов</p>
+  <p class="text-secondary text-center py-4">нәтиже жоқ</p>
   {% endif %}
 
-  <a href="{% url 'home' %}" class="btn btn-main mt-3">← басты бет / главная</a>
+  <a href="{% url 'home' %}" class="btn btn-main mt-3">главная</a>
 </div>
 
 {% endblock %}

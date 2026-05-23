@@ -42,6 +42,7 @@ def start(request):
     request.session['current'] = 0
     request.session['score'] = 0
     request.session['wrong'] = []
+    request.session['result_saved'] = False
 
     return redirect('question')
 
@@ -95,13 +96,11 @@ def question(request):
 
     show_hint = request.session.pop('show_hint', False)
     opts = list(enumerate(q['opts']))
-    letters = ['a', 'b', 'c', 'd']
     progress = int((current / total) * 100) if total > 0 else 0
 
     return render(request, 'quizbot/question.html', {
         'q': q,
         'opts': opts,
-        'letters': letters,
         'current': current + 1,
         'total': total,
         'score': request.session.get('score', 0),
@@ -126,22 +125,24 @@ def results(request):
     pct = int((score / total) * 100)
 
     if pct == 100:
-        grade, color = '5', 'success'
+        grade = '5'
     elif pct >= 80:
-        grade, color = '4', 'primary'
+        grade = '4'
     elif pct >= 60:
-        grade, color = '3', 'warning'
+        grade = '3'
     else:
-        grade, color = '2', 'danger'
+        grade = '2'
 
-    result.objects.create(
-        name=name,
-        topic=mode,
-        score=score,
-        total=total,
-        percent=pct,
-        grade=grade,
-    )
+    if not request.session.get('result_saved'):
+        result.objects.create(
+            name=name,
+            topic=mode,
+            score=score,
+            total=total,
+            percent=pct,
+            grade=grade,
+        )
+        request.session['result_saved'] = True
 
     topic_errors = {}
     for item in wrong:
@@ -154,7 +155,6 @@ def results(request):
         'total': total,
         'pct': pct,
         'grade': grade,
-        'color': color,
         'topic_errors': topic_errors,
     })
 
